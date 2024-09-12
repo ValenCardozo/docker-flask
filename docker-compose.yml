@@ -1,0 +1,34 @@
+# sudo docker build --tag first_docker_b .
+services: # Lista de servicios
+  my-app-name: #servicio/app de flask
+    build: # Lista de parámetros desde los cuales construir
+      context: . #contexto
+      dockerfile: Dockerfile #archivo de Dockerfile
+# sudo docker build --tag first_docker_b .
+# es reemplazado por docker-compose build
+
+# docker run -d -p 5005:5005 first_docker_b
+# es reemplazado por docker-compose up
+    ports: #puerto contenedor:puerto host
+      - "5005:5005"
+    restart: always #en caso de error o falla
+  mysql_db:
+    image: mysql:5.7  # Use the official MySQL 5.7 image from Docker Hub
+    environment:
+      MYSQL_ROOT_PASSWORD: root  # Set the root password for MySQL
+      MYSQL_DATABASE: sql_alchemy_a  # Create a database named 'mydatabase'
+      MYSQL_USER: db_user  # Create a MySQL user 'myuser'
+      MYSQL_PASSWORD: root  # Set the password for 'myuser'
+    volumes:
+      - ./.data/db:/var/lib/mysql
+    ports:
+      - "3307:3306"  # Map host port 3306 to container port 3306 for MySQL
+    restart: always  # Restarts the MySQL container if it stops or crashes
+    container_name: mysql_database
+#BUILDEO DE CONTENEDOR
+# sudo docker build --tag first_docker_b .
+
+#CORRER EL CONTENDOR
+#- sudo docker run -d -p 5005:5005 first_docker_b mysql:5.7 -u root -pw root -p 3600 -e MYSQL_ROOT_PASSWORD=rootpassword -e
+
+# Se reemplaza por docker-compose up y docker-compose up -d
